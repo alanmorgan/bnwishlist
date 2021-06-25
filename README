@@ -1,0 +1,23 @@
+Download your Barnes & Noble wishlist and show price changes and any
+discounted books.
+
+Configuration is minimal. Create a file 'wishlist.config' in the current
+directory with the following contents:
+
+url="your wishlist url"
+
+The wishlist url will look something like
+
+https://www.barnesandnoble.com/account/wishlist.jsp?giftlistId=somenumbers&sort=-dateAdded&pp=100&p=1
+
+Make sure that "pp" is enough to hold all the books in your wishlist. 100 works for me.
+
+Run as
+
+> bnwishlist
+
+This will read the config file, complain inscrutably if anything is
+wrong, retrieve the list from bn.com, and process it. The list will be
+saved to 'wishlist.json'. The current list will be compared to the
+contents of 'wishlist.json' and any price changes will be
+reported. Then the full list of discounted books will be printed.
