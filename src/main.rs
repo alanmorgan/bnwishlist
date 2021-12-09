@@ -72,9 +72,10 @@ fn process_wishlist(txt: &String) {
         for book in price_change {
             println!("{}", book);
         }
+
+        println!("\n\n");
     }
 
-    println!("\n\n");
     println!("Discounted");
     println!("==========");
     for book in &book_list {
