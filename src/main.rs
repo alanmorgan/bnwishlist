@@ -29,15 +29,15 @@ fn main()  {
     };
 
     if save_data {
-        let res = save_wishlist(&txt);
-
-        if res.is_err() {
+        if save_wishlist(&txt).is_err() {
             println!("Unable to save file");
             return;
         }
     }
 
-    process_wishlist(&txt);
+    if process_wishlist(&txt).is_err() {
+      println!("Unable to process wishlist");
+    }
 }
 
 fn save_wishlist(txt: &String) -> std::io::Result<()> {
@@ -47,16 +47,11 @@ fn save_wishlist(txt: &String) -> std::io::Result<()> {
     Ok(())
 }
 
-fn process_wishlist(txt: &String) {
+fn process_wishlist(txt: &String) -> std::io::Result<()> {
     // Retrieve the new book list
     let document = Document::from_read(txt.as_bytes()).unwrap();
 
-    let mut book_list = Vec::new();
-    
-    for node in document.find(Class("prod-details-sec")) {
-        let book = build_book(node);
-        book_list.push(book);
-    }
+    let book_list = document.find(Class("prod-details-sec")).map(|node| build_book(node)).collect::<Vec<_>>();
 
     // Load and compare with old one
     let old_book_list = load_books();
@@ -78,13 +73,11 @@ fn process_wishlist(txt: &String) {
 
     println!("Discounted");
     println!("==========");
-    for book in &book_list {
-        if book.has_discount() {
-            println!("{}", book);
-        }
-    }
+    book_list.iter().filter(|book| book.has_discount()).for_each(|book| println!("{}", book));
     
-    save_books(book_list);
+    save_books(book_list)?;
+
+    Ok(())
 }
 
 fn extract_text(node: Node, pred: impl Predicate) -> Option<String> {
