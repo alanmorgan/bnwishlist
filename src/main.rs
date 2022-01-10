@@ -64,8 +64,8 @@ fn process_wishlist(txt: &String) -> std::io::Result<()> {
         println!("Price change");
         println!("============");
 
-        for book in price_change {
-            println!("{}", book);
+        for (book, old_price) in price_change {
+            println!("{} was {}", book, old_price);
         }
 
         println!("\n\n");
@@ -99,7 +99,7 @@ fn get_wishlist_from_file(filename: &String) -> String {
 }
 
 fn get_wishlist_from_http(url: &String) -> String {
-    println!("Making HTTP request from {}", url);
+    println!("Making HTTP request from {}\n\n", url);
 
     match reqwest::blocking::get(url) {
         Ok(response) => {
@@ -135,7 +135,7 @@ fn load_books() -> Vec<book::Book> {
     }
 }
 
-fn find_changed_prices<'a>(old: &'a Vec<book::Book>, current: &'a Vec<book::Book>) -> Vec<&'a book::Book> {
+fn find_changed_prices<'a>(old: &'a Vec<book::Book>, current: &'a Vec<book::Book>) -> Vec<(&'a book::Book, String)> {
     let mut changed = Vec::new();
 
     // This isn't particularly efficient, but does it matter?
@@ -152,7 +152,7 @@ fn find_changed_prices<'a>(old: &'a Vec<book::Book>, current: &'a Vec<book::Book
             }
 
             if !matching_books[0].current_price.eq(&old_book.current_price) {
-                changed.push(matching_books[0])
+                changed.push((matching_books[0], old_book.current_price.clone()));
             }
         }
     }
