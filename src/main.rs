@@ -65,7 +65,7 @@ fn process_wishlist(txt: &String) -> std::io::Result<()> {
         println!("============");
 
         for (book, old_price) in price_change {
-            println!("{} was {}", book, old_price);
+            println!("{}, was {}", book, old_price);
         }
 
         println!("\n\n");
