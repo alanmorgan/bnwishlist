@@ -1,7 +1,7 @@
-use serde_derive::{Deserialize,Serialize};
+use serde_derive::{Deserialize, Serialize};
 use std::fmt;
 
-#[derive(Serialize,Deserialize,Clone)]
+#[derive(Serialize, Deserialize, Clone)]
 pub struct Book {
     pub title: String,
     pub author: String,
@@ -10,8 +10,18 @@ pub struct Book {
 }
 
 impl Book {
-    pub fn new(title: String, author: String, current_price: String, discount_percentage: Option<String>) -> Book {
-        Book{title: title, author: author, current_price: current_price, discount_percentage: discount_percentage}
+    pub fn new(
+        title: String,
+        author: String,
+        current_price: String,
+        discount_percentage: Option<String>,
+    ) -> Book {
+        Book {
+            title: title,
+            author: author,
+            current_price: current_price,
+            discount_percentage: discount_percentage,
+        }
     }
 
     pub fn has_discount(&self) -> bool {
@@ -22,16 +32,20 @@ impl Book {
 impl fmt::Display for Book {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         if self.has_discount() {
-            write!(f, "{}, {}. Currently {} ({})",
-                   self.title, self.author, self.current_price, self.discount_percentage.as_ref().unwrap())
+            write!(
+                f,
+                "{}, {}. Currently {} ({})",
+                self.title,
+                self.author,
+                self.current_price,
+                self.discount_percentage.as_ref().unwrap()
+            )
         } else {
-            write!(f, "{}, {}. Currently {}",
-                   self.title, self.author, self.current_price)
+            write!(
+                f,
+                "{}, {}. Currently {}",
+                self.title, self.author, self.current_price
+            )
         }
     }
 }
-
-
-
-
-
