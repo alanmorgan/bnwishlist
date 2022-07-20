@@ -17,10 +17,10 @@ impl Book {
         discount_percentage: Option<String>,
     ) -> Book {
         Book {
-            title: title,
-            author: author,
-            current_price: current_price,
-            discount_percentage: discount_percentage,
+            title,
+            author,
+            current_price,
+            discount_percentage,
         }
     }
 

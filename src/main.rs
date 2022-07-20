@@ -30,11 +30,9 @@ fn main() {
         get_wishlist_from_http(&cfg.url)
     };
 
-    if save_data {
-        if save_wishlist(&txt).is_err() {
-            println!("Unable to save file");
-            return;
-        }
+    if save_data && save_wishlist(&txt).is_err() {
+        println!("Unable to save file");
+        return;
     }
 
     if process_wishlist(&txt).is_err() {
@@ -55,7 +53,7 @@ fn process_wishlist(txt: &String) -> std::io::Result<()> {
 
     let book_list = document
         .find(Class("prod-details-sec"))
-        .map(|node| build_book(node))
+        .map(build_book)
         .collect::<Vec<_>>();
 
     // Load and compare with old one
@@ -89,7 +87,7 @@ fn process_wishlist(txt: &String) -> std::io::Result<()> {
 }
 
 fn extract_text(node: Node, pred: impl Predicate) -> Option<String> {
-    node.find(pred).next().map(|t| get_text(t))
+    node.find(pred).next().map(get_text)
 }
 
 fn get_text(node: Node) -> String {
@@ -160,7 +158,7 @@ fn load_books() -> Vec<book::Book> {
 
 fn find_changed_prices<'a>(
     old: &'a Vec<book::Book>,
-    current: &'a Vec<book::Book>,
+    current: &'a [book::Book],
 ) -> Vec<(&'a book::Book, String)> {
     let mut changed = Vec::new();
 
@@ -168,7 +166,7 @@ fn find_changed_prices<'a>(
 
     for old_book in old {
         let matching_books: Vec<&book::Book> = current
-            .into_iter()
+            .iter()
             .filter(|b| b.title.eq(&old_book.title))
             .collect::<Vec<&book::Book>>();
 
