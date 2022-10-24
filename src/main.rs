@@ -90,8 +90,13 @@ fn extract_text(node: Node, pred: impl Predicate) -> Option<String> {
     node.find(pred).next().map(get_text)
 }
 
+/*
+ * Each node contains text, but there may be excess spaces at the beginning
+ * and end and carriage returns and nbsp. Collapse multiple spaces to single
+ * space and trim junk from beginning and end
+ */
 fn get_text(node: Node) -> String {
-    let re: Regex = Regex::new(r"(\n|\u{A0})+ *").unwrap();
+    let re: Regex = Regex::new(r"(\n|\u{A0}| )+").unwrap();
 
     re.replace_all(
         &node
@@ -99,9 +104,9 @@ fn get_text(node: Node) -> String {
             .map(|t| t.text())
             .collect::<Vec<_>>()
             .join(""),
-        "",
-    )
-    .into_owned()
+        " ",
+        )
+        .into_owned().trim().to_string()
 }
 
 fn get_wishlist_from_file(filename: &String) -> String {
