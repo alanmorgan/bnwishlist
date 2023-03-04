@@ -8,6 +8,7 @@ edition = "2018"
 
 [dependencies]
 confy = "*"
+currency_rs = "1.1.3"
 regex = "*"
 reqwest = { version="*", features = ["blocking"]}
 scraper = "*"

@@ -1,3 +1,4 @@
+use currency_rs::Currency;
 use regex::Regex;
 use select::document::Document;
 use select::node::Node;
@@ -62,7 +63,7 @@ fn process_wishlist(txt: &String) -> std::io::Result<()> {
     let price_change = find_changed_prices(&old_book_list, &book_list);
 
     // Show any books that have had a price change and then all books
-    // selling at a dicsount
+    // under $5 then all books selling at a dicsount
     if !price_change.is_empty() {
         println!("Price change");
         println!("============");
@@ -74,6 +75,15 @@ fn process_wishlist(txt: &String) -> std::io::Result<()> {
         println!("\n\n");
     }
 
+    println!("Cheap");
+    println!("=====");
+
+    book_list
+        .iter()
+        .filter(|book| Currency::new_string(&book.current_price, None).unwrap().dollars() <= 4)
+        .for_each(|book| println!("{}", book));
+    println!("\n\n");
+           
     println!("Discounted");
     println!("==========");
     book_list
