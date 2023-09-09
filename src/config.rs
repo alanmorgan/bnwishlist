@@ -1,12 +1,13 @@
 use serde_derive::{Deserialize, Serialize};
 use std::path::Path;
+use std::default::Default;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct WishlistConfig {
     pub url: String,
 }
 
-impl ::std::default::Default for WishlistConfig {
+impl Default for WishlistConfig {
     fn default() -> Self {
         Self { url: "".into() }
     }

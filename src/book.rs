@@ -1,5 +1,5 @@
 use serde_derive::{Deserialize, Serialize};
-use std::fmt;
+use std::fmt::{Display, Formatter, Result};
 
 #[derive(Serialize, Deserialize, Clone)]
 pub struct Book {
@@ -29,8 +29,8 @@ impl Book {
     }
 }
 
-impl fmt::Display for Book {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+impl Display for Book {
+    fn fmt(&self, f: &mut Formatter) -> Result {
         if self.has_discount() {
             write!(
                 f,
