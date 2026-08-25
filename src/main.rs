@@ -53,7 +53,7 @@ fn process_wishlist(txt: &String) -> std::io::Result<()> {
     let document = Document::from_read(txt.as_bytes()).unwrap();
 
     let book_list = document
-        .find(Class("prod-details-sec"))
+        .find(Class("product-item-card"))
         .map(build_book)
         .collect::<Vec<_>>();
 
@@ -145,13 +145,13 @@ fn get_wishlist_from_http(url: &String) -> String {
 
 fn build_book(node: Node) -> book::Book {
     book::Book::new(
-        extract_text(node, Class("product-shelf-title")).unwrap(),
-        extract_text(node, Class("product-shelf-author"))
+        extract_text(node, Class("product-item-card__title")).unwrap(),
+        extract_text(node, Class("product-item-card__author"))
             .unwrap()
             .trim_start_matches("By: ")
             .to_string(),
-        extract_text(node, Class("current-price")).unwrap(),
-        extract_text(node, Class("discount-amount-text")),
+        extract_text(node, Class("product-item-card__current-price")).unwrap(),
+        extract_text(node, Class("product-item-card__discount-amount-text")),
     )
 }
 
