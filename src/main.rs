@@ -151,7 +151,7 @@ fn build_book(node: Node) -> book::Book {
             .trim_start_matches("By: ")
             .to_string(),
         extract_text(node, Class("product-item-card__current-price")).unwrap(),
-        extract_text(node, Class("product-item-card__discount-amount-text")),
+        extract_text(node, Class("product-item-card__compare-price")),
     )
 }
 
