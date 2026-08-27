@@ -1,0 +1,4 @@
+* Make the cheap price configurable
+* Price changes are since the last time you ran the program. That means if you run it
+  twice in rapid succession, the second time will show no price changes. That seems
+  wrong, but it's not obvious how to make it better

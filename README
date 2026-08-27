@@ -8,27 +8,17 @@ url="your wishlist url"
 
 The wishlist url will look something like
 
-https://www.barnesandnoble.com/account/wishlist.jsp?giftlistId=SOMENUMBER&sort=-dateAdded&pp=100&p=1
+https://www.barnesandnoble.com/lists/favorites/wishlist/<somenumbers>?title=<your title>
 
-Make sure that "pp" is enough to hold all the books in your wishlist. 100 works for me.
+You can find this by clicking on the cog on your "My Wishlists" page. You will need to make
+your wishist "Shared"
 
 Run as
 
 > bnwishlist
 
 This will read the config file, complain inscrutably if anything is
-wrong, retrieve the list from bn.com, and process it. The list will be
-saved to 'wishlist.json'. The current list will be compared to the
-contents of 'wishlist.json' and any price changes will be
-reported. Then the full list of discounted books will be printed.
-
-LATEST
-
-Sadly, this doesn't work any more. You need to log in to bn.com with your user
-name and password to read the wishlist. I haven't been able to figure out how
-to do this programmatically, so unless someone else can, this ends here.
-
-There is still some use, however. If you log in yourself and save the list to
-"somefilename.html", you can run
-
-> bnwishlist path/to/somefilename.html
+wrong, retrieve the list from bn.com, and process it.  The current list
+will be compared to the contents of 'wishlist.json' and any price changes
+will be reported. Then the full list of discounted books will be printed.
+Then the list will be saved to 'wishlist.json'
