@@ -2,15 +2,15 @@ use serde_derive::{Deserialize, Serialize};
 use std::path::Path;
 use std::default::Default;
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Default)]
 pub struct WishlistConfig {
     pub url: String,
+    #[serde(default = "default_cheap")]
+    pub cheap: i64,
 }
 
-impl Default for WishlistConfig {
-    fn default() -> Self {
-        Self { url: "".into() }
-    }
+fn default_cheap() -> i64 {
+  5
 }
 
 pub fn read_config() -> Option<WishlistConfig> {

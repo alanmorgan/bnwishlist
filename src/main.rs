@@ -36,7 +36,7 @@ fn main() {
         return;
     }
 
-    if process_wishlist(&txt).is_err() {
+    if process_wishlist(&txt, cfg.cheap).is_err() {
         println!("Unable to process wishlist");
     }
 }
@@ -48,7 +48,7 @@ fn save_wishlist(txt: &String) -> std::io::Result<()> {
     Ok(())
 }
 
-fn process_wishlist(txt: &String) -> std::io::Result<()> {
+fn process_wishlist(txt: &String, cheap:i64) -> std::io::Result<()> {
     // Retrieve the new book list
     let document = Document::from_read(txt.as_bytes()).unwrap();
 
@@ -80,7 +80,7 @@ fn process_wishlist(txt: &String) -> std::io::Result<()> {
 
     book_list
         .iter()
-        .filter(|book| Currency::new_string(&book.current_price, None).unwrap().dollars() <= 4)
+        .filter(|book| Currency::new_string(&book.current_price, None).unwrap().dollars() < cheap)
         .for_each(|book| println!("{}", book));
     println!("\n\n");
            

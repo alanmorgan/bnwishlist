@@ -1,10 +1,10 @@
-Download your Barnes & Noble wishlist and show price changes, cheap books (arbitrarily
-set at under $5), and any discounted books.
+Download your Barnes & Noble wishlist and show price changes, cheap books, and any discounted books.
 
 Configuration is minimal. Create a file 'wishlist.config' in the current
 directory with the following contents:
 
 url="your wishlist url"
+cheap=5
 
 The wishlist url will look something like
 
@@ -20,5 +20,6 @@ Run as
 This will read the config file, complain inscrutably if anything is
 wrong, retrieve the list from bn.com, and process it.  The current list
 will be compared to the contents of 'wishlist.json' and any price changes
-will be reported. Then the full list of discounted books will be printed.
+will be reported. Then any books under the dollar amount specified in
+the config file. Then the full list of discounted books will be printed.
 Then the list will be saved to 'wishlist.json'
